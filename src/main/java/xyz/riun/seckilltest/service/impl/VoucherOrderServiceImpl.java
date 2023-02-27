@@ -72,7 +72,7 @@ public class VoucherOrderServiceImpl extends ServiceImpl<VoucherOrderMapper, Vou
     }
 
     @Override
-    @Transactional(propagation= Propagation.REQUIRED, isolation= Isolation.READ_COMMITTED)
+    @Transactional(propagation= Propagation.REQUIRED, isolation= Isolation.READ_COMMITTED, rollbackFor = Exception.class)
     public long createVoucherOrder(Long voucherId, Long userId) {
         //查询用户是否已经购买 如果不加分布式锁，这里可能有多个线程同时满足条件，同时向下执行，那么一个用户就有可能通过抢单软件抢到多个优惠券
         // select count(*) from voucher_order where user_id = #{userId} and voucher_id = #{voucherId}
